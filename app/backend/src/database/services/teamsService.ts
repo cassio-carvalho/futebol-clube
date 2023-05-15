@@ -7,6 +7,13 @@ class TeamsService {
 
     return teams;
   };
+
+  public static getTeamById = async (id: string) => {
+    const team = TeamsModel.findByPk(id);
+    console.log(`Service - ${team}`);
+
+    return team;
+  };
 }
 
 export default TeamsService;
