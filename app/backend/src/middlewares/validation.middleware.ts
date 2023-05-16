@@ -1,8 +1,27 @@
 import * as bcrypt from 'bcryptjs';
 import { NextFunction, Request, Response } from 'express';
+import * as jwt from 'jsonwebtoken';
 import UsersModel from '../database/models/UsersModel';
 
+const SECRET = process.env.JWT_SECRET || 'jwt_secret';
+
 const invalid = 'Invalid email or password';
+
+const validateToken = async (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization;
+
+  if (!token) return res.status(401).json({ message: 'Token not found' });
+
+  try {
+    const result = jwt.verify(token, SECRET) as jwt.JwtPayload;
+    req.body.user = result.data;
+    req.body = { role: result.role };
+
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Token must be a valid token' });
+  }
+};
 
 const validateUser = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = await req.body;
@@ -28,4 +47,7 @@ const validateUser = async (req: Request, res: Response, next: NextFunction) => 
   next();
 };
 
-export default validateUser;
+export {
+  validateUser,
+  validateToken,
+};
