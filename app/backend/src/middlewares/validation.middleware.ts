@@ -10,7 +10,7 @@ const validateUser = async (req: Request, res: Response, next: NextFunction) => 
 
   const testEmail = regex.test(email);
   const testPassword = (password.length >= 6);
-  console.log(testPassword);
+  // console.log(testPassword);
 
   if (!email || !password) {
     return res.status(400).json({ message: 'All fields must be filled' });
