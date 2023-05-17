@@ -1,5 +1,6 @@
 import * as express from 'express';
 import loginRouter from './routes/loginRoute';
+import matchRouter from './routes/matchesRoute';
 import teamRouter from './routes/teamsRoute';
 
 class App {
@@ -12,6 +13,7 @@ class App {
 
     this.app.use(teamRouter);
 
+    this.app.use(matchRouter);
     this.app.use(loginRouter);
 
     // Não remover essa rota

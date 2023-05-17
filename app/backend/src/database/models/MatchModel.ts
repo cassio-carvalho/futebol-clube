@@ -55,7 +55,7 @@ MatchModel.init({
   // ... Outras configs
   underscored: true,
   sequelize: db,
-  modelName: 'maches',
+  modelName: 'matches',
   timestamps: false,
 });
 
