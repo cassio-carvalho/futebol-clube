@@ -30,7 +30,7 @@ class MatchController {
       if (matchCreated.homeTeamId === matchCreated.awayTeamId) {
         // console.log(matchCreated);
 
-        return res.status(401)
+        return res.status(422)
           .json({ message: 'It is not possible to create a match with two equal teams' });
       }
 
@@ -48,11 +48,15 @@ class MatchController {
 
   public static updateMatch = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
+    console.log(`id = ${id}`);
+    console.log(`body = ${req.body.homeTeamGoals}`);
 
     try {
       const { homeTeamGoals, awayTeamGoals } = req.body;
 
-      const result = await MatchService.update(Number(id), homeTeamGoals, awayTeamGoals);
+      const result = await MatchService.updateMatch(Number(id), homeTeamGoals, awayTeamGoals);
+
+      console.log(result);
 
       return res.status(200).json(result);
     } catch (e) {

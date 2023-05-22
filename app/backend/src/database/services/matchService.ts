@@ -47,7 +47,11 @@ class MatchService {
     return matchCreated as unknown as IMatch;
   };
 
-  public static update = async (id: number, homeTeamGoals: string, awayTeamGoals: string) => {
+  public static updateMatch = async (id: number, homeTeamGoals: number, awayTeamGoals: number) => {
+    console.log(`id = ${id}`);
+    console.log(`home = ${homeTeamGoals}`);
+    console.log(`away = ${awayTeamGoals}`);
+
     const updateMatch = await MatchModel.update(
       {
         homeTeamGoals,
@@ -55,6 +59,8 @@ class MatchService {
       },
       { where: { id } },
     );
+
+    console.log(updateMatch);
 
     return updateMatch;
   };
