@@ -13,8 +13,8 @@ class App {
 
     this.app.use(teamRouter);
 
-    this.app.use(matchRouter);
     this.app.use(loginRouter);
+    this.app.use(matchRouter);
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));

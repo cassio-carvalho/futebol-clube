@@ -2,17 +2,6 @@ import IMatch from '../../interfaces/matchInterface';
 import MatchModel from '../models/MatchModel';
 import TeamsModel from '../models/TeamsModel';
 
-// class MatchService {
-//   public static getAllMatches = async () => {
-//     const matches = await MatchModel.findAll();
-//     console.log(`Service - ${matches}`);
-
-//     return matches;
-//   };
-// }
-
-// export default MatchService;
-
 class MatchService {
   static getAllMatches = async (inProgress: string): Promise<IMatch[]> => {
     const matches = await MatchModel.findAll({
@@ -33,26 +22,30 @@ class MatchService {
     return matches as unknown as IMatch[];
   };
 
-  // public static getMatchesByProgress = async (inProgress: string) => {
-  //   // const matchesInProgress = MatchModel.findByPk(inProgress);
-  //   const matchesInProgress = await MatchModel.findAll({
-  //     include: [
-  //       { model: TeamsModel, as: 'homeTeam', attributes: ['teamName'] },
-  //       { model: TeamsModel, as: 'awayTeam', attributes: ['teamName'] },
-  //     ],
-  //   });
+  public static finishMatch = async (id: number) => {
+    const match = await MatchModel.update({ inProgress: false }, { where: { id } });
 
-  //   if (inProgress === 'true') {
-  //     return matchesInProgress.filter((match) => match.inProgress === true);
-  //   }
+    return match;
+  };
 
-  //   if (inProgress === 'false') {
-  //     return matchesInProgress.filter((match) => match.inProgress === false);
-  //   }
-  //   console.log(`Service - ${matchesInProgress}`);
+  public static createMatch = async (payload: IMatch): Promise<IMatch | string> => {
+    const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = payload;
 
-  //   // return matchesInProgress;
-  // };
+    const findHome = await TeamsModel.findByPk(homeTeamId);
+    const findAway = await TeamsModel.findByPk(awayTeamId);
+
+    if (!findHome || !findAway) return 'invalid';
+
+    const matchCreated = await MatchModel.create({
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+      inProgress: true,
+    });
+
+    return matchCreated as unknown as IMatch;
+  };
 }
 
 export default MatchService;
