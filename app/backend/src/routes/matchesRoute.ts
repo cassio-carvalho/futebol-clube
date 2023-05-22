@@ -10,4 +10,6 @@ matchRouter.patch('/matches/:id/finish', validateToken, MatchController.finishMa
 
 matchRouter.post('/matches', validateMatch, MatchController.createMatch);
 
+matchRouter.patch('/matches/:id', validateToken, MatchController.updateMatch);
+
 export default matchRouter;

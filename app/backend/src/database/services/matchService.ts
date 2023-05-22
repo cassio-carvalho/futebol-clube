@@ -46,6 +46,18 @@ class MatchService {
 
     return matchCreated as unknown as IMatch;
   };
+
+  public static update = async (id: number, homeTeamGoals: string, awayTeamGoals: string) => {
+    const updateMatch = await MatchModel.update(
+      {
+        homeTeamGoals,
+        awayTeamGoals,
+      },
+      { where: { id } },
+    );
+
+    return updateMatch;
+  };
 }
 
 export default MatchService;

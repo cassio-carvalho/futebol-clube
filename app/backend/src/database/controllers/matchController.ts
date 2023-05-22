@@ -45,6 +45,20 @@ class MatchController {
       next(e);
     }
   };
+
+  public static updateMatch = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    try {
+      const { homeTeamGoals, awayTeamGoals } = req.body;
+
+      const result = await MatchService.update(Number(id), homeTeamGoals, awayTeamGoals);
+
+      return res.status(200).json(result);
+    } catch (e) {
+      next(e);
+    }
+  };
 }
 
 export default MatchController;
