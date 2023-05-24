@@ -1,4 +1,5 @@
 import * as express from 'express';
+import leaderboardRouter from './routes/leaderBoardRoute';
 import loginRouter from './routes/loginRoute';
 import matchRouter from './routes/matchesRoute';
 import teamRouter from './routes/teamsRoute';
@@ -15,6 +16,8 @@ class App {
 
     this.app.use(loginRouter);
     this.app.use(matchRouter);
+
+    this.app.use(leaderboardRouter);
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
