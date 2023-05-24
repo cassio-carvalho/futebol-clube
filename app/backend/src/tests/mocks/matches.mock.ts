@@ -130,6 +130,22 @@ const inProgressMock = [
   }
 ];
 
+const createMatchMock = {
+  homeTeam: 16,
+  awayTeam: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+}
+
+const matchCreatedMock = {
+	id: 49,
+	homeTeam: 16,
+	awayTeam: 1,
+	homeTeamGoals: 2,
+	awayTeamGoals: 2,
+	inProgress: true
+}
+
 export default matchesMock;
-export { inProgressMock };
+export { inProgressMock, createMatchMock, matchCreatedMock };
 

@@ -85,4 +85,23 @@ describe('Testes da rota /login', () => {
     expect(chaiHttpResponse.body.message).to.be.equal('All fields must be filled')
   });
 
+  it('retorna status 401 quando é passado password errado na rota /login', async () => {
+    sinon
+      .stub(UsersModel, "findOne")
+      .resolves(userMock as UsersModel);
+
+    const loginBody = {
+      email: 'admin@admin.com',
+      password: 'invalid'
+    }
+
+    chaiHttpResponse = await chai
+       .request(app)
+       .post('/login')
+       .send(loginBody)
+
+    expect(chaiHttpResponse.status).to.be.equal(401)
+    expect(chaiHttpResponse.body.message).to.be.equal('Incorrect email or password')
+  });
+
 });
