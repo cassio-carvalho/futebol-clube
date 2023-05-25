@@ -3,8 +3,6 @@ import LeaderboardController from '../database/controllers/leaderBoardController
 
 const leaderboardRouter = Router();
 
-const controller = new LeaderboardController();
-
-leaderboardRouter.get('/leaderboard/home', controller.getHomeTeamsBoard);
+leaderboardRouter.get('/leaderboard/home', LeaderboardController.createLeaderboard);
 
 export default leaderboardRouter;

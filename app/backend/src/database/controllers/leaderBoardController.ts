@@ -2,16 +2,11 @@ import { Request, Response } from 'express';
 import LeaderboardService from '../services/leaderBoardService';
 
 class LeaderboardController {
-  private _service: LeaderboardService;
+  public static async createLeaderboard(_req: Request, res: Response): Promise<Response | void> {
+    const leaderboard = await LeaderboardService.createLeaderboard();
 
-  constructor() {
-    this._service = new LeaderboardService();
+    return res.status(200).json(leaderboard);
   }
-
-  getHomeTeamsBoard = async (req: Request, res: Response) => {
-    const matches = await this._service.getHomeTeamsBoard();
-    return res.status(200).json(matches);
-  };
 }
 
 export default LeaderboardController;
