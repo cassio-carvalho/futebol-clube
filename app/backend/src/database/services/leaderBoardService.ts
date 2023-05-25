@@ -1,5 +1,5 @@
 import ITeamRank from '../../interfaces/leaderboardInterface';
-import CreateLeaderboard from '../../middlewares/CreateLeaderboard.middleware';
+import LeaderboardBuilder from '../../middlewares/LeaderboardBuilder.middleware';
 import MatchModel from '../models/MatchModel';
 import TeamsModel from '../models/TeamsModel';
 
@@ -9,7 +9,7 @@ class LeaderboardService {
 
     const teams = await TeamsModel.findAll();
 
-    return CreateLeaderboard.generateLeaderboard(matches, teams);
+    return LeaderboardBuilder.buildLeaderboard(matches, teams);
   }
 }
 
